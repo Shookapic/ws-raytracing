@@ -1,0 +1,91 @@
+<canvas id="canvas" width="380" height="280"></canvas>
+<canvas id="canvas_scene" width="32" height="24"></canvas>
+
+<script>
+
+    var map_array = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+    function minimap(map_array) {
+        var canvas = document.getElementById("canvas_scene");
+        canvas.width = 32;
+        canvas.height = 24;
+        var context = canvas.getContext("2d");
+        for (var y = 0; y <= map_array.length; y++) {
+            for (var x = 0; x <= map_array[y].length; x++) {
+                if (map_array[y][x] == 1) {
+                    context.fillStyle = "black";
+                    context.fillRect(x * 8, y * 8, 8, 8);
+                } else if (map_array[y][x] == 0) {
+                    context.fillStyle = "red";
+                    context.fillRect(x * 8, y * 8, 8, 8);
+                }
+            }
+        }
+    }
+
+    function gameLoop() {
+        clear_screen();
+        drawMap();
+        drawLine(30, 30, 100, 100, "black", 8);
+        minimap(map_array);
+        setInterval(gameLoop, 1000 / 30);
+        console.log(setInterval(gameLoop, 1000/30));
+    }
+
+    function drawMap() {
+        console.info("DOM loaded");
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+    }
+
+    function drawLine(startX, startY, endX, endY, color, lineW) {
+        var canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.lineWidth = lineW;
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+    }
+
+    function clear_screen()
+    {
+        var canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.lineWidth = 15;
+        ctx.fillStyle = "red";
+        ctx.fillRect(10, 10, 380, 280);
+        ctx.strokeRect(10, 10, 365, 265);        
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", gameLoop);
+    } else {
+        gameLoop();
+    }
+
+</script>
